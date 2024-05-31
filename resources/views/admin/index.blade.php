@@ -11,12 +11,12 @@
                 <div class="widget-content">
                     <div class="w-header">
                         <div class="w-info">
-                            <h6 class="value">Expenses</h6>
+                            <h6 class="value">Users</h6>
                         </div>
                     </div>
                     <div class="w-content">
                         <div class="w-info">
-                            <p class="value">$ 45,141</p>
+                            <p class="value">{{$users}}</p>
                         </div>
 
                     </div>
@@ -30,10 +30,10 @@
                     <div class="account-box">
                         <div class="info">
                             <div class="inv-title">
-                                <h5 class="">Total Balance</h5>
+                                <h5 class="">rooms</h5>
                             </div>
                             <div class="inv-balance-info">
-                                <p class="inv-balance">$ 41,741.42</p>
+                                <p class="inv-balance">{{$rooms}}</p>
                             </div>
                         </div>
                     </div>
@@ -44,29 +44,23 @@
         <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
             <div class="widget widget-one">
                 <div class="widget-heading">
-                    <h6 class="">Statistics</h6>
+                    <h6 class="">Bookings</h6>
 
                 </div>
                 <div class="w-chart">
 
                     <div class="w-chart-section total-visits-content">
                         <div class="w-detail">
-                            <p class="w-title">Total Visits</p>
-                            <p class="w-stats">423,964</p>
-                        </div>
-                        <div class="w-chart-render-one">
-                            <div id="total-users"></div>
+                            <p class="w-title">Accepted Bookings</p>
+                            <p class="w-stats">{{$acceptedBookings}}</p>
                         </div>
                     </div>
 
 
                     <div class="w-chart-section paid-visits-content">
                         <div class="w-detail">
-                            <p class="w-title">Paid Visits</p>
-                            <p class="w-stats">7,929</p>
-                        </div>
-                        <div class="w-chart-render-one">
-                            <div id="paid-visits"></div>
+                            <p class="w-title">Canceled Bookings</p>
+                            <p class="w-stats">{{$canceledBookings}}</p>
                         </div>
                     </div>
 
