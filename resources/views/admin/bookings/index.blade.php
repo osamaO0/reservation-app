@@ -68,7 +68,6 @@
                                     <th scope="col">number of people</th>
                                     <th scope="col">start date</th>
                                     <th scope="col">end date</th>
-                                    <th scope="col">action</th>
                                 </tr>
                             </thead>
                             <tbody>
