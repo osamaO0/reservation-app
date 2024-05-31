@@ -22,6 +22,7 @@ php artisan key:genenrate
 php artisan migrate --seed
 
 #test users : 
+
 admin : superadmin@mail.com , pass : password
 
 employee : employee@mail.com , pass : password
