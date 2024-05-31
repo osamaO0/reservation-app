@@ -82,19 +82,30 @@
                   </li>
                 </ul>
               </li>
-              @auth
-                    <li><a href="{{route('website.profile')}}">Profile</a></li>
-                    <li>
-                        <form action="{{route('logout')}}" method="post">
-                            @csrf
-                            @method('post')
-                            <button type="submit" class="btn btn-primary">Logout</button>
-                        </form>
-                    </li>
-              @else
-                  <li><a href="{{route('login')}}">Login</a></li>
-                  <li><a href="{{route('register')}}">Register</a></li>
-              @endauth
+                @auth
+                    @can('access dashboard')
+                        <li><a href="{{route('admin.home')}}">Dashboard</a></li>
+                        <li>
+                            <form action="{{route('logout')}}" method="post">
+                                @csrf
+                                @method('post')
+                                <button type="submit" class="btn btn-primary">Logout</button>
+                            </form>
+                        </li>
+                    @else
+                        <li><a href="{{route('website.profile')}}">Profile</a></li>
+                        <li>
+                            <form action="{{route('logout')}}" method="post">
+                                @csrf
+                                @method('post')
+                                <button type="submit" class="btn btn-primary">Logout</button>
+                            </form>
+                        </li>
+                    @endcan
+                @else
+                    <li><a href="{{route('login')}}">Login</a></li>
+                    <li><a href="{{route('register')}}">Register</a></li>
+                @endauth
             </ul>
           </div>
           <div class="icons-wrap text-md-right">

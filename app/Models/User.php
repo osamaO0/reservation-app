@@ -51,6 +51,12 @@ class User extends Authenticatable implements HasMedia
     ];
 
 
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this

@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\PermissionsController;
+use App\Http\Controllers\Admin\RolesController;
+use App\Http\Controllers\Admin\RoomsController as AdminRoomsController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Website\ProfileController;
 use App\Http\Controllers\Website\HomeController;
 use App\Http\Controllers\Website\RoomsController;
@@ -25,8 +29,17 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
+Route::prefix('admin')->middleware(['auth', 'permission:access dashboard'])->group(function () {
+    Route::get('/home', [AdminController::class, 'index'])->name('admin.home');
+
+    Route::middleware(['role:super-admin'])->group(function () {
+        Route::resource('users', UsersController::class);
+        Route::resource('roles', RolesController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('permissions', PermissionsController::class);
+    });
+    Route::middleware(['role:employee|super-admin'])->group(function () {
+        Route::resource('rooms', AdminRoomsController::class);
+    });
 });
 
 require __DIR__.'/auth.php';

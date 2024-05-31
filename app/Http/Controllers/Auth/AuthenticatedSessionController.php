@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if ($request->email == 'admin@mail.com') {
+        if (auth()->user()->can('access dashboard')) {
             return redirect()->intended('/admin/home');
         }
         return redirect()->intended(RouteServiceProvider::HOME);
