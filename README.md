@@ -12,10 +12,13 @@ https://spatie.be/docs/laravel-medialibrary/v11/introduction (please note that i
 https://spatie.be/docs/laravel-permission/v6/introduction
 
 
-##installation : 
+#installation : 
 composer instll 
+
 cp .env.example .env
+
 php artisan key:genenrate
+
 php artisan migrate --seed
 
 #test users : 
