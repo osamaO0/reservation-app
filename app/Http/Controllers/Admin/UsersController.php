@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\users\StoreUserRequest;
+use App\Http\Requests\users\UpdateUserRequest;
 use App\Models\User;
 use App\Services\RoleService;
 use App\Services\UserService;
@@ -27,30 +29,26 @@ class UsersController extends Controller
         return view('admin.users.index', compact('users', 'roles'));
     }
 
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         $data = $request->all();
         $this->userService->create($data);
-        return redirect()->route('admin.users.index');
+        session()->flash('success', 'User created successfully');
+        return redirect()->route('users.index');
     }
 
-    public function edit($id)
-    {
-        $user = $this->userService->getById($id);
-        $roles = $this->roleService->getAll();
-        return view('admin.users.edit', compact('user', 'roles'));
-    }
-
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
         $data = $request->all();
         $this->userService->update($id, $data);
-        return redirect()->route('admin.users.index');
+        session()->flash('success', 'User updated successfully');
+        return redirect()->route('users.index');
     }
 
     public function destroy($id)
     {
         $this->userService->delete($id);
-        return redirect()->route('admin.users.index');
+        session()->flash('success', 'User deleted successfully');
+        return redirect()->route('users.index');
     }
 }

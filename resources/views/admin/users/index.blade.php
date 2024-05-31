@@ -41,7 +41,7 @@
                     <label for="roles">Roles</label>
                     <select class="js-example-basic-multiple" name="roles[]" multiple="multiple" style="width: 100%;">
                         @foreach ($roles as $role)
-                            <option value="{{$role->id}}">{{$role->name}}</option>
+                            <option value="{{$role->name}}">{{$role->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -55,6 +55,49 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalTitle">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editForm" method="post">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="edit_name">Name</label>
+                        <input type="text" name="edit_name" id="edit_name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_email">Email</label>
+                        <input type="email" name="edit_email" id="edit_email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_password">Password</label>
+                        <input type="password" name="edit_password" id="edit_password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_roles">Roles</label>
+                        <select class="js-example-basic-multiple" name="edit_roles[]" id="edit_roles" multiple="multiple" style="width: 100%;">
+                            @foreach ($roles as $role)
+                                <option value="{{$role->name}}">{{$role->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div class="layout-px-spacing">
 
@@ -86,10 +129,14 @@
                                     <span class="badge badge-primary">{{$role->name}}</span>
                                 @endforeach
                             </td>
-                            <td>{{$user->created_at}}</td>
+                            <td>{{$user->created_at->format('d/m/Y')}}</td>
                             <td>
-                                <button class="btn btn-primary">Edit</button>
-                                <a href="{{route('users.destroy', $user->id)}}" class="btn btn-danger">Delete</a>
+                                <button class="btn btn-primary edit-btn" data-id="{{$user->id}}" data-name="{{$user->name}}" data-email="{{$user->email}}" data-roles="{{json_encode($user->roles->pluck('name')->toArray())}}">Edit</button>
+                                <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
@@ -145,5 +192,24 @@
             });
         });
     });
+</script>
+
+<script>
+    $(document).on("click", ".edit-btn", function () {
+        var userId = $(this).data('id');
+        var userName = $(this).data('name');
+        var userEmail = $(this).data('email');
+        var userRoles = $(this).data('roles');
+
+        $('#edit_name').val(userName);
+        $('#edit_email').val(userEmail);
+        $('#edit_roles').val(userRoles).trigger('change');
+        $('#editForm').attr('action', '/admin/users/' + userId);
+        $('.js-example-basic-multiple').select2({
+            dropdownParent: $('#editModal')
+        });
+        $('#editModal').modal('show');
+    });
+
 </script>
 @endsection

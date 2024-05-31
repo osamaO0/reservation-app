@@ -60,25 +60,14 @@
               <li class="has-children">
                 <a href="{{route('website.rooms')}}">Rooms</a>
                 <ul class="dropdown">
-                  <li class="has-children">
-                    <a href="#">King Bedroom</a>
-                    <ul class="dropdown">
-                      <li>
-                        <a href="#">King Bedroom</a>
-                      </li>
-                      <li>
-                        <a href="#">Queen &amp; Double Bedroom</a>
-                      </li>
-                      <li>
-                        <a href="#">Le Voila Suite</a>
-                      </li>
-                    </ul>
+                  <li>
+                    <a href="{{route('website.rooms', ['type' => '1'])}}">Single room</a>
                   </li>
                   <li>
-                    <a href="#">Queen &amp; Double Bedroom</a>
+                    <a href="{{route('website.rooms', ['type' => '2'])}}">Double room</a>
                   </li>
                   <li>
-                    <a href="#">Le Voila Suite</a>
+                    <a href="{{route('website.rooms', ['type' => '3'])}}">Triple room</a>
                   </li>
                 </ul>
               </li>

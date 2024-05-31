@@ -37,6 +37,7 @@ class RolesController extends Controller
     {
         $data = $request->all();
         $this->roleService->create($data);
+        session()->flash('success', 'Role created successfully');
         return redirect()->route('roles.index');
     }
 
@@ -47,6 +48,7 @@ class RolesController extends Controller
     {
         $data = $request->all();
         $this->roleService->update($id, $data);
+        session()->flash('success', 'Role updated successfully');
         return redirect()->route('roles.index');
     }
 
@@ -56,6 +58,7 @@ class RolesController extends Controller
     public function destroy(string $id)
     {
         $this->roleService->delete($id);
+        session()->flash('success', 'Role deleted successfully');
         return redirect()->route('roles.index');
     }
 }

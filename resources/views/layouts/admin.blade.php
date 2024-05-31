@@ -35,9 +35,9 @@
 </head>
 <body>
     <!-- BEGIN LOADER -->
-    <div id="load_screen"> <div class="loader"> <div class="loader-content">
+    {{-- <div id="load_screen"> <div class="loader"> <div class="loader-content">
         <div class="spinner-grow align-self-center"></div>
-    </div></div></div>
+    </div></div></div> --}}
     <!--  END LOADER -->
 
     <!--  BEGIN NAVBAR  -->
@@ -129,7 +129,7 @@
                     </li>
                 </ul>
                 <div class="shadow-bottom"></div>
-                <ul class="list-unstyled menu-categories">
+                <ul class="list-unstyled menu-categories" id="accordionExample">
                     <li class="menu active">
                         <a href="{{route('admin.home')}}" class="dropdown-toggle">
                             <div class="">
@@ -154,16 +154,27 @@
                     @endrole
 
                     <li class="menu">
-                        <a href="{{route('rooms.index')}}" aria-expanded="false" class="dropdown-toggle">
+                        <a href="#rooms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                                 <span>rooms</span>
                             </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </div>
                         </a>
+                        <ul class="collapse submenu list-unstyled" id="rooms" data-parent="#accordionExample">
+                            <li>
+                                <a href="{{route('rooms.index')}}"> all rooms </a>
+                            </li>
+                            <li>
+                                <a href="{{route('rooms.create')}}"> create </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="menu">
-                        <a href="apps_todoList.html" aria-expanded="false" class="dropdown-toggle">
+                        <a href="{{route('bookings.index')}}" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 <span>bookings</span>
@@ -190,6 +201,25 @@
                         </a>
                     </li>
                     @endrole
+
+                    <li class="menu">
+                        <a href="{{route('website.home')}}" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                <span>website</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="menu">
+                        <a href="{{route('logout')}}" aria-expanded="false" class="dropdown-toggle">
+                            <form action="{{route('logout')}}" method="post">
+                                @csrf
+                                @method('post')
+                                <button type="submit" class="btn btn-danger">Logout</button>
+                            </form>
+                        </a>
+                    </li>
 
                 </ul>
 

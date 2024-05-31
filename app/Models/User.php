@@ -13,7 +13,7 @@ use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use InteractsWithMedia;
@@ -54,14 +54,5 @@ class User extends Authenticatable implements HasMedia
     public function bookings()
     {
         return $this->hasMany(Booking::class);
-    }
-
-
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Fit::Contain, 300, 300)
-            ->nonQueued();
     }
 }

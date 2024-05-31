@@ -2,64 +2,38 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\BookingStatusEnum;
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 
 class BookingsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+
+        $pendingBookings = Booking::with('user', 'bookable')->where('status', BookingStatusEnum::PENDING)->get();
+        $acceptedBookings = Booking::with('user', 'bookable')->where('status', BookingStatusEnum::CONFIRMED)->get();
+        $rejectedBookings = Booking::with('user', 'bookable')->where('status', BookingStatusEnum::CANCELLED)->get();
+        return view('admin.bookings.index', compact('pendingBookings', 'acceptedBookings', 'rejectedBookings'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function accept(Request $request, string $id)
     {
-        //
+        $booking = Booking::find($id);
+        $booking->status = BookingStatusEnum::CONFIRMED;
+        $booking->save();
+        session()->flash('success', 'Booking accepted successfully');
+        return redirect()->back();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function reject(Request $request, string $id)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $booking = Booking::find($id);
+        $booking->status = BookingStatusEnum::CANCELLED;
+        $booking->save();
+        session()->flash('success', 'Booking rejected successfully');
+        return redirect()->back();
     }
 }

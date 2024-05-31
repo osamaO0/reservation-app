@@ -10,46 +10,23 @@
 
 @section('content')
 
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Add Room</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form action="{{route('rooms.store')}}" method="post">
-            @csrf
-            <div class="modal-body">
-                @csrf
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" id="name" class="form-control">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-    </form>
-      </div>
-    </div>
-</div>
 <div class="layout-px-spacing">
 
     <div class="row layout-top-spacing" id="cancel-row">
 
-        <button type="button" class="btn btn-primary m-4" data-toggle="modal" data-target="#exampleModalLong">
+        <a href="{{route('rooms.create')}}" class="btn btn-primary m-4">
             Add Room
-        </button>
+        </a>
 
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
                 <table id="html5-extension" class="table table-hover non-hover" style="width:100%">
                     <thead>
                         <tr>
+                            <th>Image</th>
                             <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
                             <th>Created At</th>
                             <th class="dt-no-sorting">Action</th>
                         </tr>
@@ -57,11 +34,23 @@
                     <tbody>
                         @foreach ($rooms as $room)
                         <tr>
-                            <td>{{$room->name}}</td>
-                            <td>{{$room->created_at}}</td>
                             <td>
-                                <button class="btn btn-primary">Edit</button>
-                                <a href="{{route('rooms.destroy', $room->id)}}" class="btn btn-danger">Delete</a>
+                                @php $mediaItems = $room->getMedia("images") @endphp
+                                <img src="{{$mediaItems[0]->getUrl()}}" alt="Room Image" style="width: 70px" height="70px">
+                            </td>
+                            <td>{{$room->name}}</td>
+                            <td style="width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                {{$room->description}}
+                            </td>
+                            <td>{{$room->price}}</td>
+                            <td>{{$room->created_at->format('d/m/Y')}}</td>
+                            <td>
+                                <a href="{{route('rooms.edit', $room->id)}}" class="btn btn-primary">Edit</a>
+                                <form method="POST" action="{{ route('rooms.destroy', $room->id) }}" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this room?')">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
