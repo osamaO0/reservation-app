@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('website.home');
+    Route::get('/search', [HomeController::class, 'search'])->name('website.search');
     Route::get('/rooms', [RoomsController::class, 'index'])->name('website.rooms');
     Route::get('/rooms/{room:id}', [RoomsController::class, 'show'])->name('website.rooms.show');
     Route::post('/rooms/{room:id}/book', [RoomsController::class, 'book'])->name('website.rooms.book');

@@ -32,21 +32,23 @@
                             <thead>
                                 <tr>
                                     <th scope="col">room</th>
-                                    <th scope="col">user</th>
+                                    <th scope="col">name</th>
+                                    <th scope="col">phone</th>
+                                    <th scope="col">number of people</th>
                                     <th scope="col">start date</th>
                                     <th scope="col">end date</th>
-                                    <th scope="col">status</th>
                                     <th scope="col">action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($pendingBookings as $booking)
                                 <tr>
-                                    <td>{{ $booking->bookable_type }}</td>
-                                    <td>{{ $booking->user->name }}</td>
+                                    <td style="overflow: hidden; max-width: 100px; text-overflow: ellipsis; white-space: nowrap;">{{ $booking->bookable->name ?? $booking->description }}</td>
+                                    <td>{{ $booking->name }}</td>
+                                    <td>{{ $booking->phone }}</td>
+                                    <td>{{ $booking->number_of_people }}</td>
                                     <td>{{ $booking->start_date }}</td>
                                     <td>{{ $booking->end_date }}</td>
-                                    <td>{{ $booking->status }}</td>
                                     <td>
                                         <a href="{{ route('bookings.accept', $booking->id) }}" class="btn btn-success">Accept</a>
                                         <a href="{{ route('bookings.reject', $booking->id) }}" class="btn btn-danger">Reject</a>
@@ -61,21 +63,23 @@
                             <thead>
                                 <tr>
                                     <th scope="col">room</th>
-                                    <th scope="col">user</th>
+                                    <th scope="col">name</th>
+                                    <th scope="col">phone</th>
+                                    <th scope="col">number of people</th>
                                     <th scope="col">start date</th>
                                     <th scope="col">end date</th>
-                                    <th scope="col">status</th>
                                     <th scope="col">action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($acceptedBookings as $acceptedBooking)
                                 <tr>
-                                    <td>{{ $acceptedBooking->bookable_type }}</td>
-                                    <td>{{ $acceptedBooking->user->name }}</td>
+                                    <td style="overflow: hidden; max-width: 100px; text-overflow: ellipsis; white-space: nowrap;">{{ $acceptedBooking->bookable->name ?? $acceptedBooking->description }}</td>
+                                    <td>{{ $acceptedBooking->name }}</td>
+                                    <td>{{ $acceptedBooking->phone }}</td>
+                                    <td>{{ $acceptedBooking->number_of_people }}</td>
                                     <td>{{ $acceptedBooking->start_date }}</td>
                                     <td>{{ $acceptedBooking->end_date }}</td>
-                                    <td>{{ $acceptedBooking->status }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -86,20 +90,22 @@
                             <thead>
                                 <tr>
                                     <th scope="col">room</th>
-                                    <th scope="col">user</th>
+                                    <th scope="col">name</th>
+                                    <th scope="col">phone</th>
+                                    <th scope="col">number of people</th>
                                     <th scope="col">start date</th>
                                     <th scope="col">end date</th>
-                                    <th scope="col">status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($rejectedBookings as $rejectedBooking)
                                 <tr>
-                                    <td>{{ $rejectedBooking->bookable_type }}</td>
-                                    <td>{{ $rejectedBooking->user->name }}</td>
+                                    <td style="overflow: hidden; max-width: 100px; text-overflow: ellipsis; white-space: nowrap;">{{ $rejectedBooking->bookable->name ?? $rejectedBooking->description }}</td>
+                                    <td>{{ $rejectedBooking->name }}</td>
+                                    <td>{{ $rejectedBooking->phone }}</td>
+                                    <td>{{ $rejectedBooking->number_of_people }}</td>
                                     <td>{{ $rejectedBooking->start_date }}</td>
                                     <td>{{ $rejectedBooking->end_date }}</td>
-                                    <td>{{ $rejectedBooking->status }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

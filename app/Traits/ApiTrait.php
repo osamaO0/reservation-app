@@ -80,6 +80,12 @@ trait ApiTrait
     }
 
 
+    public function paginatedResult($query, $perPage = 10)
+    {
+        return $query->paginate($perPage);
+    }
+
+
     public function returnFailData($key, $value, $msg = "", array $extra = [])
     {
         $data = [
